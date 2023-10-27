@@ -6,6 +6,12 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <StartupObject>ToDoList.Program</StartupObject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ServiceStack.OrmLite.Sqlite" Version="6.11.0" />
+    <PackageReference Include="SQLite" Version="3.13.0" />
+  </ItemGroup>
 
 </Project>

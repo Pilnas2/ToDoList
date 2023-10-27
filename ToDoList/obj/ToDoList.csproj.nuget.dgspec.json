@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Škola\\C# II\\ToDoList\\ToDoList\\ToDoList\\ToDoList.csproj": {}
+    "C:\\Skola\\C# II\\ToDoList\\ToDoList\\ToDoList\\ToDoList.csproj": {}
   },
   "projects": {
-    "C:\\Škola\\C# II\\ToDoList\\ToDoList\\ToDoList\\ToDoList.csproj": {
+    "C:\\Skola\\C# II\\ToDoList\\ToDoList\\ToDoList\\ToDoList.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Škola\\C# II\\ToDoList\\ToDoList\\ToDoList\\ToDoList.csproj",
+        "projectUniqueName": "C:\\Skola\\C# II\\ToDoList\\ToDoList\\ToDoList\\ToDoList.csproj",
         "projectName": "ToDoList",
-        "projectPath": "C:\\Škola\\C# II\\ToDoList\\ToDoList\\ToDoList\\ToDoList.csproj",
+        "projectPath": "C:\\Skola\\C# II\\ToDoList\\ToDoList\\ToDoList\\ToDoList.csproj",
         "packagesPath": "C:\\Users\\marti\\.nuget\\packages\\",
-        "outputPath": "C:\\Škola\\C# II\\ToDoList\\ToDoList\\ToDoList\\obj\\",
+        "outputPath": "C:\\Skola\\C# II\\ToDoList\\ToDoList\\ToDoList\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -43,6 +43,16 @@
       "frameworks": {
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
+          "dependencies": {
+            "SQLite": {
+              "target": "Package",
+              "version": "[3.13.0, )"
+            },
+            "ServiceStack.OrmLite.Sqlite": {
+              "target": "Package",
+              "version": "[6.11.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
