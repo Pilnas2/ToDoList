@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ToDoList",
+    "\\ToDoList\\DataAccess",
+    "\\ToDoList\\DataAccess\\Models"
   ],
-  "SelectedNode": "\\ToDoList.sln",
+  "SelectedNode": "\\ToDoList\\DataAccess\\DbContext.cs",
   "PreviewInSolutionExplorer": false
 }

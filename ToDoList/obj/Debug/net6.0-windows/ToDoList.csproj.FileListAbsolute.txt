@@ -30,3 +30,5 @@ C:\Skola\C# II\ToDoList\ToDoList\ToDoList\obj\Debug\net6.0-windows\refint\ToDoLi
 C:\Skola\C# II\ToDoList\ToDoList\ToDoList\obj\Debug\net6.0-windows\ToDoList.pdb
 C:\Skola\C# II\ToDoList\ToDoList\ToDoList\obj\Debug\net6.0-windows\ToDoList.genruntimeconfig.cache
 C:\Skola\C# II\ToDoList\ToDoList\ToDoList\obj\Debug\net6.0-windows\ref\ToDoList.dll
+C:\Skola\C# II\ToDoList\ToDoList\ToDoList\obj\Debug\net6.0-windows\ToDoList.Properties.Resources.resources
+C:\Skola\C# II\ToDoList\ToDoList\ToDoList\bin\Debug\net6.0-windows\Database\TextFile1.txt

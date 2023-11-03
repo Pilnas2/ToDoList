@@ -41,6 +41,7 @@
             deleteButton = new Button();
             editButton = new Button();
             newButton = new Button();
+            categoriesComboBox = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)todoListGridView).BeginInit();
             SuspendLayout();
             // 
@@ -102,7 +103,7 @@
             // 
             label5.BackColor = Color.White;
             label5.BorderStyle = BorderStyle.Fixed3D;
-            label5.Location = new Point(571, 89);
+            label5.Location = new Point(511, 89);
             label5.Name = "label5";
             label5.Size = new Size(1, 413);
             label5.TabIndex = 7;
@@ -113,17 +114,21 @@
             monthCalendar1.Location = new Point(10, 257);
             monthCalendar1.Name = "monthCalendar1";
             monthCalendar1.TabIndex = 8;
+            monthCalendar1.DateChanged += monthCalendar1_DateChanged;
             // 
             // todoListGridView
             // 
             todoListGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            todoListGridView.BackgroundColor = Color.Silver;
+            todoListGridView.BackgroundColor = Color.Purple;
+            todoListGridView.BorderStyle = BorderStyle.None;
             todoListGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            todoListGridView.Location = new Point(591, 113);
+            todoListGridView.GridColor = SystemColors.ActiveCaptionText;
+            todoListGridView.Location = new Point(518, 129);
             todoListGridView.Name = "todoListGridView";
             todoListGridView.RowTemplate.Height = 25;
-            todoListGridView.Size = new Size(515, 364);
+            todoListGridView.Size = new Size(608, 364);
             todoListGridView.TabIndex = 9;
+            todoListGridView.CellContentClick += todoListGridView_CellContentClick;
             // 
             // saveButton
             // 
@@ -165,12 +170,22 @@
             newButton.UseVisualStyleBackColor = true;
             newButton.Click += newButton_Click;
             // 
+            // categoriesComboBox
+            // 
+            categoriesComboBox.FormattingEnabled = true;
+            categoriesComboBox.Location = new Point(518, 100);
+            categoriesComboBox.Name = "categoriesComboBox";
+            categoriesComboBox.Size = new Size(121, 23);
+            categoriesComboBox.TabIndex = 20;
+            categoriesComboBox.SelectedIndexChanged += categoriesComboBox_SelectedIndexChanged;
+            // 
             // ToDoList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Purple;
             ClientSize = new Size(1140, 534);
+            Controls.Add(categoriesComboBox);
             Controls.Add(newButton);
             Controls.Add(editButton);
             Controls.Add(deleteButton);
@@ -207,5 +222,6 @@
         private Button deleteButton;
         private Button editButton;
         private Button newButton;
+        private ComboBox categoriesComboBox;
     }
 }
