@@ -1,5 +1,8 @@
 using System.Data;
 using System.Data.SQLite;
+using System.Drawing.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ToDoList
 {
@@ -9,7 +12,7 @@ namespace ToDoList
         bool isEditing = false;
         string allPlaceholder = "Vöechny";
         private string connectionString = "Data Source=C:\\Skola\\C# II\\ToDoList\\ToDoList\\ToDoList\\todoList.db";
-
+        private int tasksId;
 
         public ToDoList()
         {
@@ -22,14 +25,15 @@ namespace ToDoList
 
         public void ToDoList_Load(object sender, EventArgs e)
         {
+            todoListGridView.DataSource = todoList;
+
             todoList.Columns.Add("N·zev");
             todoList.Columns.Add("Popis");
             todoList.Columns.Add("Datum splnÏnÌ");
             todoList.Columns.Add("Kategorie");
-            todoList.Columns.Add("Stav");
+            todoList.Columns.Add("Id");
+            todoListGridView.Columns["Id"].Visible = false;
 
-
-            todoListGridView.DataSource = todoList;
 
             dateTimePicker1.CustomFormat = "dd.MM.yyyy HH:mm";
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
@@ -57,6 +61,26 @@ namespace ToDoList
 
                             categoryComboBox1.Items.Add(categoryName);
                             filtrCategoryComboBox.Items.Add(categoryName);
+                        }
+                    }
+                }
+                string selectTasksQuery = "SELECT * FROM Tasks";
+                using (SQLiteCommand selectTasksCommand = new SQLiteCommand(selectTasksQuery, connection))
+                {
+                    using (SQLiteDataReader reader = selectTasksCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string title = reader["title"].ToString();
+                            string description = reader["description"].ToString();
+                            DateTime dueDate = Convert.ToDateTime(reader["due_date"]);
+                            int categoryId = Convert.ToInt32(reader["category_id"]);
+                            int id = Convert.ToInt32(reader["id"]);
+                            tasksId = id;
+                            string categoryTitle = GetCategoryNameById(categoryId);
+
+                            // P¯idejte data do datovÈho zdroje (todoList)
+                            todoList.Rows.Add(title, description, dueDate, categoryTitle, id);
                         }
                     }
                 }
@@ -94,7 +118,14 @@ namespace ToDoList
         {
             try
             {
-                todoList.Rows[todoListGridView.CurrentCell.RowIndex].Delete();
+                int selectedRowIndex = todoListGridView.CurrentCell.RowIndex;
+                int taskId = Convert.ToInt32(todoList.Rows[selectedRowIndex]["Id"]);
+
+                // Odebr·nÌ ¯·dku z DataGridView
+                todoList.Rows.RemoveAt(selectedRowIndex);
+
+                // Smaz·nÌ z·znamu z datab·ze na z·kladÏ ID
+                DeleteTaskFromDatabase(taskId);
             }
             catch (Exception ex)
             {
@@ -102,10 +133,49 @@ namespace ToDoList
             }
         }
 
+        private void DeleteTaskFromDatabase(int taskId)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                string deleteQuery = "DELETE FROM Tasks WHERE id = @TaskID";
+                using (SQLiteCommand deleteCmd = new SQLiteCommand(deleteQuery, connection))
+                {
+                    deleteCmd.Parameters.AddWithValue("@TaskID", taskId);
+
+                    // Spusùte SQL dotaz pro smaz·nÌ z·znamu z datab·ze
+                    deleteCmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private void saveButton_Click(object sender, EventArgs e)
         {
+            string categoryName = categoryComboBox1.SelectedItem.ToString();
+            int categoryId = GetCategoryIdByName(categoryName);
+
+
             if (isEditing)
             {
+
+                using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string insertQuery = "UPDATE Tasks SET title = @Title, description = @Description, due_date = @DueDate, category_id = @CategoryID WHERE id = @TaskID";
+                    using (SQLiteCommand cmd = new SQLiteCommand(insertQuery, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Title", titleTextBox.Text);
+                        cmd.Parameters.AddWithValue("@Description", descriptionTextBox.Text);
+                        cmd.Parameters.AddWithValue("@DueDate", dateTimePicker1.Value);
+                        cmd.Parameters.AddWithValue("@CategoryID", categoryId);
+                        cmd.Parameters.AddWithValue("@TaskID", tasksId);
+
+                        // Spusùte SQL dotaz
+                        cmd.ExecuteNonQuery();
+                    }
+                }
                 todoList.Rows[todoListGridView.CurrentCell.RowIndex]["N·zev"] = titleTextBox.Text;
                 todoList.Rows[todoListGridView.CurrentCell.RowIndex]["Popis"] = descriptionTextBox.Text;
                 todoList.Rows[todoListGridView.CurrentCell.RowIndex]["Datum splnÏnÌ"] = dateTimePicker1.Value;
@@ -115,6 +185,22 @@ namespace ToDoList
             }
             else
             {
+                using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string insertQuery = "INSERT INTO Tasks (title, description, due_date, category_id) VALUES (@Title, @Description, @DueDate, @CategoryID)";
+                    using (SQLiteCommand cmd = new SQLiteCommand(insertQuery, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Title", titleTextBox.Text);
+                        cmd.Parameters.AddWithValue("@Description", descriptionTextBox.Text);
+                        cmd.Parameters.AddWithValue("@DueDate", dateTimePicker1.Value);
+                        cmd.Parameters.AddWithValue("@CategoryID", categoryId);
+
+                        // Spusùte SQL dotaz
+                        cmd.ExecuteNonQuery();
+                    }
+                }
                 todoList.Rows.Add(titleTextBox.Text, descriptionTextBox.Text, dateTimePicker1.Value, categoryComboBox1.SelectedItem.ToString() /*, "nesplnÏno" */);
             }
             titleTextBox.Text = string.Empty;
@@ -122,6 +208,53 @@ namespace ToDoList
             dateTimePicker1.Value = DateTime.Today;
             categoryComboBox1.SelectedItem = allPlaceholder;
             isEditing = false;
+        }
+
+        private int GetCategoryIdByName(string categoryName)
+        {
+            int categoryId = -1; // Pokud kategorie nenÌ nalezena, v˝chozÌ hodnota -1
+
+            string selectCategoryQuery = "SELECT id FROM Categories WHERE Name = @name";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SQLiteCommand selectCategoryCommand = new SQLiteCommand(selectCategoryQuery, connection))
+                {
+                    selectCategoryCommand.Parameters.AddWithValue("@name", categoryName);
+                    object result = selectCategoryCommand.ExecuteScalar();
+
+                    if (result != null)
+                    {
+                        categoryId = Convert.ToInt32(result);
+                    }
+                }
+            }
+
+            return categoryId;
+        }
+        private string GetCategoryNameById(int categoryId)
+        {
+            string categoryName = "Vöechny"; // Pokud kategorie nenÌ nalezena, v˝chozÌ hodnota je pr·zdn˝ ¯etÏzec
+
+            string selectCategoryQuery = "SELECT Name FROM Categories WHERE id = @categoryId";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SQLiteCommand selectCategoryCommand = new SQLiteCommand(selectCategoryQuery, connection))
+                {
+                    selectCategoryCommand.Parameters.AddWithValue("@categoryId", categoryId);
+                    object result = selectCategoryCommand.ExecuteScalar();
+
+                    if (result != null)
+                    {
+                        categoryName = result.ToString();
+                    }
+                }
+            }
+
+            return categoryName;
         }
 
         private void addCategoryButton_Click(object sender, EventArgs e)
