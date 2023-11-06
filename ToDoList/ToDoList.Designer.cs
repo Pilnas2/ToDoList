@@ -47,6 +47,8 @@
             label7 = new Label();
             addCategoryTextBox = new TextBox();
             addCategoryButton = new Button();
+            checkBox1 = new CheckBox();
+            label8 = new Label();
             ((System.ComponentModel.ISupportInitialize)todoListGridView).BeginInit();
             SuspendLayout();
             // 
@@ -225,12 +227,33 @@
             addCategoryButton.UseVisualStyleBackColor = true;
             addCategoryButton.Click += addCategoryButton_Click;
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(436, 332);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(87, 19);
+            checkBox1.TabIndex = 24;
+            checkBox1.Text = "Upozornění";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(307, 332);
+            label8.Name = "label8";
+            label8.Size = new Size(118, 15);
+            label8.TabIndex = 25;
+            label8.Text = "Zapnout upozornění:";
+            // 
             // ToDoList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Purple;
             ClientSize = new Size(1140, 534);
+            Controls.Add(label8);
+            Controls.Add(checkBox1);
             Controls.Add(addCategoryButton);
             Controls.Add(addCategoryTextBox);
             Controls.Add(label7);
@@ -279,5 +302,7 @@
         private Label label7;
         private TextBox addCategoryTextBox;
         private Button addCategoryButton;
+        private CheckBox checkBox1;
+        private Label label8;
     }
 }

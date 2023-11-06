@@ -43,7 +43,6 @@ namespace ToDoList
             filtrCategoryComboBox.Items.Add(allPlaceholder);
             filtrCategoryComboBox.SelectedItem = allPlaceholder;
 
-            string connectionString = "Data Source=C:\\Skola\\C# II\\ToDoList\\ToDoList\\ToDoList\\todoList.db"; // ZmÏÚte cestu k vaöÌ SQLite datab·zi
             SQLiteConnection connection = new SQLiteConnection(connectionString);
 
             try
@@ -121,10 +120,8 @@ namespace ToDoList
                 int selectedRowIndex = todoListGridView.CurrentCell.RowIndex;
                 int taskId = Convert.ToInt32(todoList.Rows[selectedRowIndex]["Id"]);
 
-                // Odebr·nÌ ¯·dku z DataGridView
                 todoList.Rows.RemoveAt(selectedRowIndex);
 
-                // Smaz·nÌ z·znamu z datab·ze na z·kladÏ ID
                 DeleteTaskFromDatabase(taskId);
             }
             catch (Exception ex)
@@ -144,7 +141,6 @@ namespace ToDoList
                 {
                     deleteCmd.Parameters.AddWithValue("@TaskID", taskId);
 
-                    // Spusùte SQL dotaz pro smaz·nÌ z·znamu z datab·ze
                     deleteCmd.ExecuteNonQuery();
                 }
             }
@@ -182,6 +178,7 @@ namespace ToDoList
                 todoList.Rows[todoListGridView.CurrentCell.RowIndex]["Kategorie"] = categoryComboBox1.SelectedItem.ToString();
                 //todoList.Rows[todoListGridView.CurrentCell.RowIndex]["Stav"] = "nesplnÏno";
 
+
             }
             else
             {
@@ -200,14 +197,56 @@ namespace ToDoList
                         // Spusùte SQL dotaz
                         cmd.ExecuteNonQuery();
                     }
+                    int newTaskID = GetLastInsertedTaskID(connection);
+
+                    if (checkBox1.Checked)
+                    {
+                        // CheckBox je zaökrtnut˝, takûe vloûte ˙daje do tabulky "Reminders"
+                        InsertReminderToDatabase(newTaskID, dateTimePicker1.Value);
+                    }
                 }
                 todoList.Rows.Add(titleTextBox.Text, descriptionTextBox.Text, dateTimePicker1.Value, categoryComboBox1.SelectedItem.ToString() /*, "nesplnÏno" */);
+
             }
             titleTextBox.Text = string.Empty;
             descriptionTextBox.Text = string.Empty;
             dateTimePicker1.Value = DateTime.Today;
             categoryComboBox1.SelectedItem = allPlaceholder;
             isEditing = false;
+
+            todoList = new DataTable();
+            todoListGridView.DataSource = todoList;
+
+
+            ToDoList_Load(sender, e);
+
+
+        }
+
+
+        private int GetLastInsertedTaskID(SQLiteConnection connection)
+        {
+            using (SQLiteCommand cmd = new SQLiteCommand("SELECT last_insert_rowid()", connection))
+            {
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
+        private void InsertReminderToDatabase(int taskId, DateTime reminderDateTime)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                string insertQuery = "INSERT INTO Reminders (task_id, reminder_date_time) VALUES (@TaskID, @ReminderDateTime)";
+                using (SQLiteCommand cmd = new SQLiteCommand(insertQuery, connection))
+                {
+                    cmd.Parameters.AddWithValue("@TaskID", taskId);
+                    cmd.Parameters.AddWithValue("@ReminderDateTime", reminderDateTime);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         private int GetCategoryIdByName(string categoryName)
@@ -284,5 +323,7 @@ namespace ToDoList
 
             addCategoryTextBox.Clear();
         }
+
+
     }
 }
