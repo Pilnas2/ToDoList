@@ -35,13 +35,24 @@
             descriptionTextBox = new TextBox();
             label4 = new Label();
             label5 = new Label();
-            monthCalendar1 = new MonthCalendar();
             todoListGridView = new DataGridView();
             saveButton = new Button();
             deleteButton = new Button();
             editButton = new Button();
             newButton = new Button();
+<<<<<<< HEAD
             categoriesComboBox = new ComboBox();
+=======
+            dateTimePicker1 = new DateTimePicker();
+            label6 = new Label();
+            categoryComboBox1 = new ComboBox();
+            filtrCategoryComboBox = new ComboBox();
+            label7 = new Label();
+            addCategoryTextBox = new TextBox();
+            addCategoryButton = new Button();
+            checkBox1 = new CheckBox();
+            label8 = new Label();
+>>>>>>> odprezentovano
             ((System.ComponentModel.ISupportInitialize)todoListGridView).BeginInit();
             SuspendLayout();
             // 
@@ -93,7 +104,7 @@
             // label4
             // 
             label4.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.Location = new Point(10, 208);
+            label4.Location = new Point(12, 283);
             label4.Name = "label4";
             label4.Size = new Size(1116, 40);
             label4.TabIndex = 6;
@@ -108,6 +119,7 @@
             label5.Size = new Size(1, 413);
             label5.TabIndex = 7;
             // 
+<<<<<<< HEAD
             // monthCalendar1
             // 
             monthCalendar1.BackColor = Color.Red;
@@ -116,14 +128,20 @@
             monthCalendar1.TabIndex = 8;
             monthCalendar1.DateChanged += monthCalendar1_DateChanged;
             // 
+=======
+>>>>>>> odprezentovano
             // todoListGridView
             // 
             todoListGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             todoListGridView.BackgroundColor = Color.Purple;
             todoListGridView.BorderStyle = BorderStyle.None;
             todoListGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+<<<<<<< HEAD
             todoListGridView.GridColor = SystemColors.ActiveCaptionText;
             todoListGridView.Location = new Point(518, 129);
+=======
+            todoListGridView.Location = new Point(588, 129);
+>>>>>>> odprezentovano
             todoListGridView.Name = "todoListGridView";
             todoListGridView.RowTemplate.Height = 25;
             todoListGridView.Size = new Size(608, 364);
@@ -134,7 +152,7 @@
             // 
             saveButton.Location = new Point(343, 470);
             saveButton.Name = "saveButton";
-            saveButton.Size = new Size(108, 23);
+            saveButton.Size = new Size(222, 23);
             saveButton.TabIndex = 13;
             saveButton.Text = "Uložit";
             saveButton.UseVisualStyleBackColor = true;
@@ -170,6 +188,7 @@
             newButton.UseVisualStyleBackColor = true;
             newButton.Click += newButton_Click;
             // 
+<<<<<<< HEAD
             // categoriesComboBox
             // 
             categoriesComboBox.FormattingEnabled = true;
@@ -178,6 +197,87 @@
             categoriesComboBox.Size = new Size(121, 23);
             categoriesComboBox.TabIndex = 20;
             categoriesComboBox.SelectedIndexChanged += categoriesComboBox_SelectedIndexChanged;
+=======
+            // dateTimePicker1
+            // 
+            dateTimePicker1.AllowDrop = true;
+            dateTimePicker1.Format = DateTimePickerFormat.Time;
+            dateTimePicker1.Location = new Point(14, 326);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(200, 23);
+            dateTimePicker1.TabIndex = 17;
+            // 
+            // label6
+            // 
+            label6.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Location = new Point(10, 208);
+            label6.Name = "label6";
+            label6.Size = new Size(555, 40);
+            label6.TabIndex = 18;
+            label6.Text = "Kategorie";
+            // 
+            // categoryComboBox1
+            // 
+            categoryComboBox1.FormattingEnabled = true;
+            categoryComboBox1.Location = new Point(14, 251);
+            categoryComboBox1.Name = "categoryComboBox1";
+            categoryComboBox1.Size = new Size(121, 23);
+            categoryComboBox1.TabIndex = 19;
+            // 
+            // filtrCategoryComboBox
+            // 
+            filtrCategoryComboBox.FormattingEnabled = true;
+            filtrCategoryComboBox.Items.AddRange(new object[] { "Všechny" });
+            filtrCategoryComboBox.Location = new Point(588, 100);
+            filtrCategoryComboBox.Name = "filtrCategoryComboBox";
+            filtrCategoryComboBox.Size = new Size(121, 23);
+            filtrCategoryComboBox.TabIndex = 20;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(588, 82);
+            label7.Name = "label7";
+            label7.Size = new Size(60, 15);
+            label7.TabIndex = 21;
+            label7.Text = "Kategorie:";
+            // 
+            // addCategoryTextBox
+            // 
+            addCategoryTextBox.Location = new Point(274, 251);
+            addCategoryTextBox.Name = "addCategoryTextBox";
+            addCategoryTextBox.Size = new Size(136, 23);
+            addCategoryTextBox.TabIndex = 22;
+            // 
+            // addCategoryButton
+            // 
+            addCategoryButton.Location = new Point(436, 251);
+            addCategoryButton.Name = "addCategoryButton";
+            addCategoryButton.Size = new Size(100, 23);
+            addCategoryButton.TabIndex = 23;
+            addCategoryButton.Text = "Přidat kategorii";
+            addCategoryButton.UseVisualStyleBackColor = true;
+            addCategoryButton.Click += addCategoryButton_Click;
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(436, 332);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(87, 19);
+            checkBox1.TabIndex = 24;
+            checkBox1.Text = "Upozornění";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(307, 332);
+            label8.Name = "label8";
+            label8.Size = new Size(118, 15);
+            label8.TabIndex = 25;
+            label8.Text = "Zapnout upozornění:";
+>>>>>>> odprezentovano
             // 
             // ToDoList
             // 
@@ -185,13 +285,24 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Purple;
             ClientSize = new Size(1140, 534);
+<<<<<<< HEAD
             Controls.Add(categoriesComboBox);
+=======
+            Controls.Add(label8);
+            Controls.Add(checkBox1);
+            Controls.Add(addCategoryButton);
+            Controls.Add(addCategoryTextBox);
+            Controls.Add(label7);
+            Controls.Add(filtrCategoryComboBox);
+            Controls.Add(categoryComboBox1);
+            Controls.Add(label6);
+            Controls.Add(dateTimePicker1);
+>>>>>>> odprezentovano
             Controls.Add(newButton);
             Controls.Add(editButton);
             Controls.Add(deleteButton);
             Controls.Add(saveButton);
             Controls.Add(todoListGridView);
-            Controls.Add(monthCalendar1);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(descriptionTextBox);
@@ -216,12 +327,23 @@
         private TextBox descriptionTextBox;
         private Label label4;
         private Label label5;
-        private MonthCalendar monthCalendar1;
         private DataGridView todoListGridView;
         private Button saveButton;
         private Button deleteButton;
         private Button editButton;
         private Button newButton;
+<<<<<<< HEAD
         private ComboBox categoriesComboBox;
+=======
+        private DateTimePicker dateTimePicker1;
+        private Label label6;
+        private ComboBox categoryComboBox1;
+        private ComboBox filtrCategoryComboBox;
+        private Label label7;
+        private TextBox addCategoryTextBox;
+        private Button addCategoryButton;
+        private CheckBox checkBox1;
+        private Label label8;
+>>>>>>> odprezentovano
     }
 }
