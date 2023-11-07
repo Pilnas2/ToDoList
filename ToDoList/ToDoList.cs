@@ -13,6 +13,7 @@ namespace ToDoList
         string allPlaceholder = "Vöechny";
         private string connectionString = "Data Source=C:\\Skola\\C# II\\ToDoList\\ToDoList\\ToDoList\\todoList.db";
         private int tasksId;
+        private string customFormat = "dd.MM.yyyy HH:mm";
 
         public ToDoList()
         {
@@ -34,10 +35,8 @@ namespace ToDoList
             todoList.Columns.Add("Id");
             todoListGridView.Columns["Id"].Visible = false;
 
-
-            dateTimePicker1.CustomFormat = "dd.MM.yyyy HH:mm";
+            dateTimePicker1.CustomFormat = customFormat;
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
-            dateTimePicker1.MinDate = DateTime.Today;
             categoryComboBox1.Items.Add(allPlaceholder);
             categoryComboBox1.SelectedItem = allPlaceholder;
             filtrCategoryComboBox.Items.Add(allPlaceholder);
@@ -164,7 +163,7 @@ namespace ToDoList
                     {
                         cmd.Parameters.AddWithValue("@Title", titleTextBox.Text);
                         cmd.Parameters.AddWithValue("@Description", descriptionTextBox.Text);
-                        cmd.Parameters.AddWithValue("@DueDate", dateTimePicker1.Value);
+                        cmd.Parameters.AddWithValue("@DueDate", dateTimePicker1.Value.ToString(customFormat));
                         cmd.Parameters.AddWithValue("@CategoryID", categoryId);
                         cmd.Parameters.AddWithValue("@TaskID", tasksId);
 
@@ -174,7 +173,7 @@ namespace ToDoList
                 }
                 todoList.Rows[todoListGridView.CurrentCell.RowIndex]["N·zev"] = titleTextBox.Text;
                 todoList.Rows[todoListGridView.CurrentCell.RowIndex]["Popis"] = descriptionTextBox.Text;
-                todoList.Rows[todoListGridView.CurrentCell.RowIndex]["Datum splnÏnÌ"] = dateTimePicker1.Value;
+                todoList.Rows[todoListGridView.CurrentCell.RowIndex]["Datum splnÏnÌ"] = dateTimePicker1.Value.ToString(customFormat);
                 todoList.Rows[todoListGridView.CurrentCell.RowIndex]["Kategorie"] = categoryComboBox1.SelectedItem.ToString();
                 //todoList.Rows[todoListGridView.CurrentCell.RowIndex]["Stav"] = "nesplnÏno";
 
@@ -191,21 +190,19 @@ namespace ToDoList
                     {
                         cmd.Parameters.AddWithValue("@Title", titleTextBox.Text);
                         cmd.Parameters.AddWithValue("@Description", descriptionTextBox.Text);
-                        cmd.Parameters.AddWithValue("@DueDate", dateTimePicker1.Value);
+                        cmd.Parameters.AddWithValue("@DueDate", dateTimePicker1.Value.ToString(customFormat));
                         cmd.Parameters.AddWithValue("@CategoryID", categoryId);
 
-                        // Spusùte SQL dotaz
                         cmd.ExecuteNonQuery();
                     }
                     int newTaskID = GetLastInsertedTaskID(connection);
 
                     if (checkBox1.Checked)
                     {
-                        // CheckBox je zaökrtnut˝, takûe vloûte ˙daje do tabulky "Reminders"
                         InsertReminderToDatabase(newTaskID, dateTimePicker1.Value);
                     }
                 }
-                todoList.Rows.Add(titleTextBox.Text, descriptionTextBox.Text, dateTimePicker1.Value, categoryComboBox1.SelectedItem.ToString() /*, "nesplnÏno" */);
+                todoList.Rows.Add(titleTextBox.Text, descriptionTextBox.Text, dateTimePicker1.Value.ToString(customFormat), categoryComboBox1.SelectedItem.ToString() /*, "nesplnÏno" */);
 
             }
             titleTextBox.Text = string.Empty;
@@ -251,7 +248,7 @@ namespace ToDoList
 
         private int GetCategoryIdByName(string categoryName)
         {
-            int categoryId = -1; // Pokud kategorie nenÌ nalezena, v˝chozÌ hodnota -1
+            int categoryId = -1;
 
             string selectCategoryQuery = "SELECT id FROM Categories WHERE Name = @name";
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
