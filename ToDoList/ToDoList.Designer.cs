@@ -40,9 +40,7 @@
             deleteButton = new Button();
             editButton = new Button();
             newButton = new Button();
-<<<<<<< HEAD
             categoriesComboBox = new ComboBox();
-=======
             dateTimePicker1 = new DateTimePicker();
             label6 = new Label();
             categoryComboBox1 = new ComboBox();
@@ -52,7 +50,6 @@
             addCategoryButton = new Button();
             checkBox1 = new CheckBox();
             label8 = new Label();
->>>>>>> odprezentovano
             ((System.ComponentModel.ISupportInitialize)todoListGridView).BeginInit();
             SuspendLayout();
             // 
@@ -119,7 +116,6 @@
             label5.Size = new Size(1, 413);
             label5.TabIndex = 7;
             // 
-<<<<<<< HEAD
             // monthCalendar1
             // 
             monthCalendar1.BackColor = Color.Red;
@@ -128,20 +124,15 @@
             monthCalendar1.TabIndex = 8;
             monthCalendar1.DateChanged += monthCalendar1_DateChanged;
             // 
-=======
->>>>>>> odprezentovano
             // todoListGridView
             // 
             todoListGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             todoListGridView.BackgroundColor = Color.Purple;
             todoListGridView.BorderStyle = BorderStyle.None;
             todoListGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-<<<<<<< HEAD
             todoListGridView.GridColor = SystemColors.ActiveCaptionText;
             todoListGridView.Location = new Point(518, 129);
-=======
             todoListGridView.Location = new Point(588, 129);
->>>>>>> odprezentovano
             todoListGridView.Name = "todoListGridView";
             todoListGridView.RowTemplate.Height = 25;
             todoListGridView.Size = new Size(608, 364);
@@ -188,7 +179,6 @@
             newButton.UseVisualStyleBackColor = true;
             newButton.Click += newButton_Click;
             // 
-<<<<<<< HEAD
             // categoriesComboBox
             // 
             categoriesComboBox.FormattingEnabled = true;
@@ -197,7 +187,6 @@
             categoriesComboBox.Size = new Size(121, 23);
             categoriesComboBox.TabIndex = 20;
             categoriesComboBox.SelectedIndexChanged += categoriesComboBox_SelectedIndexChanged;
-=======
             // dateTimePicker1
             // 
             dateTimePicker1.AllowDrop = true;
@@ -277,7 +266,6 @@
             label8.Size = new Size(118, 15);
             label8.TabIndex = 25;
             label8.Text = "Zapnout upozornění:";
->>>>>>> odprezentovano
             // 
             // ToDoList
             // 
@@ -285,9 +273,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Purple;
             ClientSize = new Size(1140, 534);
-<<<<<<< HEAD
             Controls.Add(categoriesComboBox);
-=======
             Controls.Add(label8);
             Controls.Add(checkBox1);
             Controls.Add(addCategoryButton);
@@ -297,7 +283,6 @@
             Controls.Add(categoryComboBox1);
             Controls.Add(label6);
             Controls.Add(dateTimePicker1);
->>>>>>> odprezentovano
             Controls.Add(newButton);
             Controls.Add(editButton);
             Controls.Add(deleteButton);
@@ -332,9 +317,7 @@
         private Button deleteButton;
         private Button editButton;
         private Button newButton;
-<<<<<<< HEAD
         private ComboBox categoriesComboBox;
-=======
         private DateTimePicker dateTimePicker1;
         private Label label6;
         private ComboBox categoryComboBox1;
@@ -344,6 +327,5 @@
         private Button addCategoryButton;
         private CheckBox checkBox1;
         private Label label8;
->>>>>>> odprezentovano
     }
 }

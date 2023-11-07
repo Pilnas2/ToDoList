@@ -94,10 +94,7 @@ namespace ToDoList
             }
         }
 
-        private void ToDoList_Shown(object sender, EventArgs e)
-        {
-            RelodData();
-        }
+
 
         private void newButton_Click(object sender, EventArgs e)
         {
