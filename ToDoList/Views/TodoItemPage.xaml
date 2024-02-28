@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDoList.Views.TodoItemPage"
+             Background="{Binding CustomBackground}">
+
+
+
+    <Shell.TitleView>
+        <Label Text="To Do List"
+               FontFamily="Helvetica"
+               TextColor="White"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center"
+               FontSize="Medium" />
+    </Shell.TitleView>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!-- První řádek, který se roztáhne na zbývající prostor -->
+            <RowDefinition Height="Auto" />
+            <!-- Druhý řádek, který se přizpůsobí obsahu (zde tlačítko) -->
+        </Grid.RowDefinitions>
+        <ListView x:Name="myListView"
+                  Margin="20"
+                  SeparatorVisibility="None"
+                  Grid.Row="0">
+            <ListView.RowHeight>
+                <OnPlatform x:TypeArguments="x:Int32">
+                    <On Platform="iOS, Android"
+                        Value="80" />
+                    <On Platform="UWP"
+                        Value="90" />
+                </OnPlatform>
+            </ListView.RowHeight>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ContentView Padding="4">
+                            <Frame Padding="30,10"
+                                   BackgroundColor="#1E1E23">
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout>
+                                        <Label Text="{Binding Name}"
+                                               TextColor="White" />
+                                        <StackLayout Orientation="Horizontal">
+                                            <Image Source="calendar.png"
+                                                   HeightRequest="15"
+                                                   WidthRequest="15"
+                                                   Margin="0,0,5,0" />
+                                            <Label Text="{Binding DueDate}"
+                                                   TextColor="#A09B9B" />
+
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </ContentView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Grid.Row="1"
+                Text="Přidat úkol"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Center"
+                Margin="10" />
+    </Grid>
+
+
+</ContentPage>
