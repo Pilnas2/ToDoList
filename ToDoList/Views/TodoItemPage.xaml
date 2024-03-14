@@ -2,72 +2,113 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ToDoList.Views.TodoItemPage"
-             Background="{Binding CustomBackground}">
-
-
-
-    <Shell.TitleView>
-        <Label Text="To Do List"
-               FontFamily="Helvetica"
-               TextColor="White"
-               HorizontalTextAlignment="Center"
-               VerticalTextAlignment="Center"
-               FontSize="Medium" />
-    </Shell.TitleView>
-
+             Title="To Do List">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <!-- První řádek, který se roztáhne na zbývající prostor -->
             <RowDefinition Height="Auto" />
-            <!-- Druhý řádek, který se přizpůsobí obsahu (zde tlačítko) -->
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ListView x:Name="myListView"
-                  Margin="20"
-                  SeparatorVisibility="None"
-                  Grid.Row="0">
-            <ListView.RowHeight>
-                <OnPlatform x:TypeArguments="x:Int32">
-                    <On Platform="iOS, Android"
-                        Value="80" />
-                    <On Platform="UWP"
-                        Value="90" />
-                </OnPlatform>
-            </ListView.RowHeight>
 
-            <ListView.ItemTemplate>
+
+        <CollectionView x:Name="myCollectionView"
+                        Margin="20,0,20,0"
+                        Grid.Row="0"
+                        SelectionMode="Multiple">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
-                        <ContentView Padding="4">
-                            <Frame Padding="30,10"
-                                   BackgroundColor="#1E1E23">
-                                <StackLayout Orientation="Horizontal">
-                                    <StackLayout>
-                                        <Label Text="{Binding Name}"
-                                               TextColor="White" />
-                                        <StackLayout Orientation="Horizontal">
-                                            <Image Source="calendar.png"
-                                                   HeightRequest="15"
-                                                   WidthRequest="15"
-                                                   Margin="0,0,5,0" />
-                                            <Label Text="{Binding DueDate}"
-                                                   TextColor="#A09B9B" />
 
-                                        </StackLayout>
+                    <ContentView Padding="4">
+                        <Frame Padding="30,10"
+                               BackgroundColor="#1E1E23">
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout>
+                                    <Label Text="{Binding Name}"
+                                           TextColor="White" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="calendar.png"
+                                               HeightRequest="15"
+                                               WidthRequest="15"
+                                               Margin="0,0,5,0" />
+                                        <Label Text="{Binding DueDate}"
+                                               TextColor="#A09B9B" />
                                     </StackLayout>
                                 </StackLayout>
-                            </Frame>
-                        </ContentView>
-                    </ViewCell>
+                            </StackLayout>
+                        </Frame>
+                    </ContentView>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Button Grid.Row="1"
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Border x:Name="AddTask"
+                Grid.Row="1"
+                IsVisible="false"
+                BackgroundColor="#1E1E23">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20,20,0,0" />
+            </Border.StrokeShape>
+            <Grid BackgroundColor="Transparent"
+                  Padding="0"
+                  IsVisible="true"
+                  ColumnSpacing="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Entry x:Name="entryAddTask"
+                       Text="{Binding Name}"
+                       BackgroundColor="#1E1E23"
+                       TextColor="White"
+                       Placeholder="Přidat úkol"
+                       Grid.Row="0"
+                       Grid.ColumnSpan="3"
+                       Completed="OnEntryCompletedAsync">
+                </Entry>
+                <ImageButton Source="calendar.png"
+                             HeightRequest="15"
+                             WidthRequest="15"
+                             Grid.Row="1"
+                             Grid.Column="0"
+                             HorizontalOptions="Start"
+                             Margin="10,0,0,0">
+                </ImageButton>
+                <ImageButton Source="calendar.png"
+                             HeightRequest="15"
+                             WidthRequest="15"
+                             Grid.Row="1"
+                             Grid.Column="1"
+                             HorizontalOptions="Start">
+
+                </ImageButton>
+                <ImageButton Source="calendar.png"
+                             HeightRequest="15"
+                             WidthRequest="15"
+                             Grid.Row="1"
+                             Grid.Column="2"
+                             HorizontalOptions="Start"></ImageButton>
+            </Grid>
+        </Border>
+
+        <Button Grid.Row="2"
                 Text="Přidat úkol"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="Center"
-                Margin="10" />
+                Margin="10"
+                Background="{DynamicResource Primary}"
+                Pressed="btnAddTask" />
+
     </Grid>
 
 

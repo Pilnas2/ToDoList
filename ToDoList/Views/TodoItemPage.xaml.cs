@@ -1,29 +1,42 @@
+using System.Collections.ObjectModel;
 using Microsoft.VisualBasic;
 using ToDoList.Models;
 
-namespace ToDoList.Views;
-
-public partial class TodoItemPage : ContentPage
+namespace ToDoList.Views
 {
-    public TodoItemPage()
+    public partial class TodoItemPage : ContentPage
     {
-        InitializeComponent();
-
-        List<ToDoItems> myList = new List<ToDoItems>
+        public TodoItemPage()
         {
-            new ToDoItems{Name = "Úkol1", DueDate = "2021"},
-            new ToDoItems{Name = "Úkol2", DueDate = "2022"},
-            new ToDoItems{Name = "Úkol3", DueDate = "2023"},
-            new ToDoItems{Name = "Úkol4", DueDate = "2024"},
-            new ToDoItems{Name = "Úkol4", DueDate = "2024"},
-            new ToDoItems{Name = "Úkol4", DueDate = "2024"},
-            new ToDoItems{Name = "Úkol4", DueDate = "2024"},
-            new ToDoItems{Name = "Úkol4", DueDate = "2024"},
-            new ToDoItems{Name = "Úkol4", DueDate = "2024"},
-            new ToDoItems{Name = "Úkol4", DueDate = "2024"},
-            new ToDoItems{Name = "Úkol4", DueDate = "2024"},
-            new ToDoItems{Name = "Úkol4", DueDate = "2024"},
-        };
-        myListView.ItemsSource = myList;
+            InitializeComponent();
+            BindingContext = new ToDoItem();
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            TodoItemDatabase database = await TodoItemDatabase.Instance;
+            myCollectionView.ItemsSource = await database.GetItemsAsync();
+        }
+
+        void btnAddTask(object sender, EventArgs e)
+        {
+            AddTask.IsVisible = true;
+        }
+
+        async void OnEntryCompletedAsync(object sender, EventArgs e)
+        {
+            var todoItem = (ToDoItem)BindingContext;
+            TodoItemDatabase database = await TodoItemDatabase.Instance;
+            await database.SaveItemAsync(todoItem);
+            await Navigation.PopAsync();
+        }
+        async void OnDeleteClicked(object sender, EventArgs e)
+        {
+            var todoItem = (ToDoItem)BindingContext;
+            TodoItemDatabase database = await TodoItemDatabase.Instance;
+            await database.DeleteItemAsync(todoItem);
+            await Navigation.PopAsync();
+        }
     }
 }
