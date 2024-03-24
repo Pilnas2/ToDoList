@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Microsoft.VisualBasic;
 using ToDoList.Models;
 
@@ -16,12 +17,18 @@ namespace ToDoList.Views
         {
             base.OnAppearing();
             TodoItemDatabase database = await TodoItemDatabase.Instance;
-            myCollectionView.ItemsSource = await database.GetItemsAsync();
+            myListView.ItemsSource = await database.GetItemsAsync();
         }
+
 
         void btnAddTask(object sender, EventArgs e)
         {
             AddTask.IsVisible = true;
+        }
+        void hideKeyboard(object sender, EventArgs e)
+        {
+            entryAddTask.IsEnabled = false;
+            entryAddTask.IsEnabled = true;
         }
 
         async void OnEntryCompletedAsync(object sender, EventArgs e)
@@ -29,14 +36,19 @@ namespace ToDoList.Views
             var todoItem = (ToDoItem)BindingContext;
             TodoItemDatabase database = await TodoItemDatabase.Instance;
             await database.SaveItemAsync(todoItem);
-            await Navigation.PopAsync();
+            hideKeyboard(sender, e);
+            await Navigation.PushAsync(new TodoItemPage());
         }
-        async void OnDeleteClicked(object sender, EventArgs e)
+        async void OnItemDeletedAsync(object sender, EventArgs e)
         {
-            var todoItem = (ToDoItem)BindingContext;
+            var item = sender as SwipeItem;
+            if (item is null) return;
+            var todoItem = item.BindingContext as ToDoItem;
+            if (todoItem is null) return;
             TodoItemDatabase database = await TodoItemDatabase.Instance;
             await database.DeleteItemAsync(todoItem);
-            await Navigation.PopAsync();
+            await Navigation.PushAsync(new TodoItemPage());
         }
+
     }
 }
