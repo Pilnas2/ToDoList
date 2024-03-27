@@ -12,6 +12,7 @@ namespace ToDoList.Models
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
         public string Name { get; set; }
-        public string? DueDate { get; set; }
+        public DateTime? DueDate { get; set; }
+        public DateTime? ReminderDateTime { get; set; }
     }
 }

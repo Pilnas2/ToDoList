@@ -9,6 +9,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
 
@@ -49,7 +50,7 @@
                                                        HeightRequest="15"
                                                        WidthRequest="15"
                                                        Margin="0,0,5,0" />
-                                                <Label Text="{Binding DueDate}"
+                                                <Label Text="{Binding DueDate, StringFormat='{}{0:dd.MM.yyyy}'}"
                                                        TextColor="#A09B9B" />
                                             </StackLayout>
                                         </StackLayout>
@@ -63,7 +64,7 @@
         </ListView>
 
         <Border x:Name="AddTask"
-                Grid.Row="1"
+                Grid.Row="2"
                 IsVisible="false"
                 BackgroundColor="#1E1E23">
             <Border.StrokeShape>
@@ -83,12 +84,15 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Entry x:Name="entryAddTask"
+                <Entry Keyboard="Chat"
+                       x:Name="entryAddTask"
                        Text="{Binding Name}"
                        BackgroundColor="#1E1E23"
+                       TextColor="White"
                        Placeholder="Přidat úkol"
                        Grid.Row="0"
                        Grid.ColumnSpan="3"
+                       ReturnType="Go"
                        Completed="OnEntryCompletedAsync">
                 </Entry>
                 <ImageButton Source="calendar.png"
@@ -97,7 +101,8 @@
                              Grid.Row="1"
                              Grid.Column="0"
                              HorizontalOptions="Start"
-                             Margin="10,0,0,0">
+                             Margin="10,0,0,0"
+                             Clicked="OnDueDateButtonClicked">
                 </ImageButton>
                 <ImageButton Source="calendar.png"
                              HeightRequest="15"
@@ -116,13 +121,125 @@
             </Grid>
         </Border>
 
-        <Button Grid.Row="2"
+        <Button Grid.Row="3"
                 Text="Přidat úkol"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="Center"
                 Margin="10"
                 Background="{DynamicResource Primary}"
-                Pressed="btnAddTask" />
+                Pressed="BtnAddTask" />
+
+
+        <Border x:Name="AddDueDate"
+                Grid.Row="1"
+                Grid.RowSpan="3"
+                IsVisible="false"
+                BackgroundColor="#1E1E23">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20,20,0,0" />
+            </Border.StrokeShape>
+
+
+            <Grid Margin="5">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Text="Termín splnění"
+                       Margin="10"
+                       Grid.ColumnSpan="2"
+                       HorizontalOptions="Center"
+                       TextColor="White"
+                       FontAttributes="Bold"
+                       TextDecorations="Underline" />
+
+                <Button Text="Hotovo"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        Margin="10"
+                        BackgroundColor="Transparent"
+                        Grid.Column="1"
+                        Clicked="OnDueDateDone" />
+
+
+                <Button x:Name="btnToday"
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Text="Dnes"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="Start"
+                        Clicked="OnTodayDueDateDone" />
+
+                <Button x:Name="btnTomorrow"
+                        Grid.Column="0"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Text="Zítra"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="Start"
+                        Clicked="OnTomorrowDueDateDone" />
+
+                <Button x:Name="btnPickDueDate"
+                        Grid.Column="0"
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        Text="Vybrat datum"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="Start"
+                        Clicked="OnDueDatePickerButtonClicked" />
+            </Grid>
+
+        </Border>
+        <Border x:Name="DueDatePicker"
+                Grid.Row="1"
+                Grid.RowSpan="3"
+                IsVisible="false"
+                BackgroundColor="#1E1E23">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20,20,0,0" />
+            </Border.StrokeShape>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Text="Vyberte datum a čas"
+                       Margin="10"
+                       Grid.ColumnSpan="2"
+                       Grid.Row="0"
+                       HorizontalOptions="Center"
+                       TextColor="White"
+                       FontAttributes="Bold"
+                       TextDecorations="Underline" />
+                <Button Text="Hotovo"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        Margin="10"
+                        BackgroundColor="Transparent"
+                        Grid.Column="1"
+                        Clicked="OnDueDateDone" />
+                <DatePicker x:Name="dueDatePicker"
+                            TextColor="White"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            BindingContext="{Binding DueDate}"
+                            DateSelected="OnPickDateDone">
+                </DatePicker>
+
+            </Grid>
+        </Border>
 
     </Grid>
 
