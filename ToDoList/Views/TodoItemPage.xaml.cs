@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 using Microsoft.VisualBasic;
 using ToDoList.Models;
@@ -12,6 +13,7 @@ namespace ToDoList.Views
             InitializeComponent();
             BindingContext = new ToDoItem();
             dueDatePicker.MinimumDate = DateTime.Today;
+            reminderDatePicker.MinimumDate = DateTime.Today;
         }
 
         protected override async void OnAppearing()
@@ -40,10 +42,19 @@ namespace ToDoList.Views
         {
             AddDueDate.IsVisible = true;
         }
+        void OnReminderDateButtonClicked(object sender, EventArgs e)
+        {
+            AddReminderDatePicker.IsVisible = true;
+        }
+        void Back(object sender, EventArgs e)
+        {
+            AddDueDatePicker.IsVisible = false;
+            AddReminderDatePicker.IsVisible = false;
+        }
 
         void OnDueDatePickerButtonClicked(object sender, EventArgs e)
         {
-            DueDatePicker.IsVisible = true;
+            AddDueDatePicker.IsVisible = true;
         }
 
         async void OnEntryCompletedAsync(object sender, EventArgs e)
@@ -67,7 +78,13 @@ namespace ToDoList.Views
         void OnDueDateDone(object sender, EventArgs e)
         {
             AddDueDate.IsVisible = false;
+            AddDueDatePicker.IsVisible = false;
         }
+        void OnReminderDateimTimeDone(object sender, EventArgs e)
+        {
+            AddReminderDatePicker.IsVisible = false;
+        }
+
         void OnTodayDueDateDone(object sender, EventArgs e)
         {
             var date = DateTime.Today;
@@ -83,13 +100,30 @@ namespace ToDoList.Views
             todoItem.DueDate = date;
             OnDueDateDone(sender, e);
         }
-        void OnPickDateDone(object sender, DateChangedEventArgs e)
+        void OnPickDateDueDateDone(object sender, DateChangedEventArgs e)
         {
             var todoItem = (ToDoItem)BindingContext;
             todoItem.DueDate = e.NewDate;
-            DueDatePicker.IsVisible = false;
-            AddDueDate.IsVisible = false;
+            OnDueDateDone(sender, e);
+        }
+        void OnPickDateReminderDone(object sender, DateChangedEventArgs e)
+        {
+            var todoItem = (ToDoItem)BindingContext;
+            todoItem.ReminderDate = e.NewDate;
         }
 
+        void OnTimePickerPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Time")
+            {
+                HandleTimeChange();
+                OnReminderDateimTimeDone(sender, e);
+            }
+        }
+        private void HandleTimeChange()
+        {
+            var todoItem = (ToDoItem)BindingContext;
+            todoItem.ReminderTime = tpReminderTime.Time;
+        }
     }
 }

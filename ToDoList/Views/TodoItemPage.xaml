@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ToDoList.Views.TodoItemPage"
-             Title="To Do List">
+             Title="To Do List"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -19,10 +20,8 @@
                   Grid.Row="0">
             <ListView.RowHeight>
                 <OnPlatform x:TypeArguments="x:Int32">
-                    <On Platform="iOS, Android"
+                    <On Platform="iOS, Android, UWP"
                         Value="80" />
-                    <On Platform="UWP"
-                        Value="90" />
                 </OnPlatform>
             </ListView.RowHeight>
 
@@ -33,7 +32,7 @@
                             <SwipeView.LeftItems>
                                 <SwipeItems>
                                     <SwipeItem Text="Smaž"
-                                               IconImageSource="dotne_bot"
+                                               IconImageSource="bin.png"
                                                BackgroundColor="Red"
                                                Invoked="OnItemDeletedAsync" />
                                 </SwipeItems>
@@ -52,6 +51,7 @@
                                                        Margin="0,0,5,0" />
                                                 <Label Text="{Binding DueDate, StringFormat='{}{0:dd.MM.yyyy}'}"
                                                        TextColor="#A09B9B" />
+
                                             </StackLayout>
                                         </StackLayout>
                                     </StackLayout>
@@ -67,11 +67,11 @@
                 Grid.Row="2"
                 IsVisible="false"
                 BackgroundColor="#1E1E23">
+
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="20,20,0,0" />
             </Border.StrokeShape>
             <Grid BackgroundColor="Transparent"
-                  Padding="0"
                   IsVisible="true"
                   ColumnSpacing="15">
                 <Grid.RowDefinitions>
@@ -84,12 +84,13 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
+
                 <Entry Keyboard="Chat"
                        x:Name="entryAddTask"
                        Text="{Binding Name}"
                        BackgroundColor="#1E1E23"
                        TextColor="White"
-                       Placeholder="Přidat úkol"
+                       Placeholder="Název úkolu"
                        Grid.Row="0"
                        Grid.ColumnSpan="3"
                        ReturnType="Go"
@@ -103,21 +104,33 @@
                              HorizontalOptions="Start"
                              Margin="10,0,0,0"
                              Clicked="OnDueDateButtonClicked">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="White" />
+                    </ImageButton.Behaviors>
                 </ImageButton>
-                <ImageButton Source="calendar.png"
+                <ImageButton Source="alarm.png"
                              HeightRequest="15"
                              WidthRequest="15"
                              Grid.Row="1"
                              Grid.Column="1"
-                             HorizontalOptions="Start">
-
+                             HorizontalOptions="Start"
+                             Clicked="OnReminderDateButtonClicked">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="White" />
+                    </ImageButton.Behaviors>
                 </ImageButton>
-                <ImageButton Source="calendar.png"
+                <ImageButton Source="note.png"
                              HeightRequest="15"
                              WidthRequest="15"
                              Grid.Row="1"
                              Grid.Column="2"
-                             HorizontalOptions="Start"></ImageButton>
+                             HorizontalOptions="Start"
+                             Clicked="OnDueDateButtonClicked">
+
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="White" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
             </Grid>
         </Border>
 
@@ -154,6 +167,8 @@
                 </Grid.RowDefinitions>
                 <Label Text="Termín splnění"
                        Margin="10"
+                       Grid.Row="0"
+                       Grid.Column="0"
                        Grid.ColumnSpan="2"
                        HorizontalOptions="Center"
                        TextColor="White"
@@ -166,6 +181,7 @@
                         Margin="10"
                         BackgroundColor="Transparent"
                         Grid.Column="1"
+                        Grid.Row="0"
                         Clicked="OnDueDateDone" />
 
 
@@ -198,7 +214,7 @@
             </Grid>
 
         </Border>
-        <Border x:Name="DueDatePicker"
+        <Border x:Name="AddDueDatePicker"
                 Grid.Row="1"
                 Grid.RowSpan="3"
                 IsVisible="false"
@@ -223,20 +239,69 @@
                        TextColor="White"
                        FontAttributes="Bold"
                        TextDecorations="Underline" />
-                <Button Text="Hotovo"
+                <Button Text="Zpět"
                         HorizontalOptions="End"
                         VerticalOptions="Start"
                         Margin="10"
                         BackgroundColor="Transparent"
                         Grid.Column="1"
-                        Clicked="OnDueDateDone" />
+                        Clicked="Back" />
                 <DatePicker x:Name="dueDatePicker"
                             TextColor="White"
                             Grid.Row="1"
                             Grid.Column="0"
-                            BindingContext="{Binding DueDate}"
-                            DateSelected="OnPickDateDone">
+                            Margin="10"
+                            DateSelected="OnPickDateDueDateDone">
                 </DatePicker>
+
+            </Grid>
+        </Border>
+        <Border x:Name="AddReminderDatePicker"
+                Grid.Row="1"
+                Grid.RowSpan="3"
+                IsVisible="false"
+                BackgroundColor="#1E1E23">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20,20,0,0" />
+            </Border.StrokeShape>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Text="Vyberte datum a čas"
+                       Margin="10"
+                       Grid.ColumnSpan="2"
+                       Grid.Row="0"
+                       HorizontalOptions="Center"
+                       TextColor="White"
+                       FontAttributes="Bold"
+                       TextDecorations="Underline" />
+                <Button Text="Zpět"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        Margin="10"
+                        BackgroundColor="Transparent"
+                        Grid.Column="1"
+                        Clicked="Back" />
+                <DatePicker x:Name="reminderDatePicker"
+                            TextColor="White"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="10"
+                            DateSelected="OnPickDateReminderDone">
+                </DatePicker>
+                <TimePicker x:Name="tpReminderTime"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            TextColor="White"
+                            Margin="10"
+                            PropertyChanged="OnTimePickerPropertyChanged" />
 
             </Grid>
         </Border>

@@ -13,6 +13,8 @@ namespace ToDoList.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public DateTime? DueDate { get; set; }
-        public DateTime? ReminderDateTime { get; set; }
+        public DateTime? ReminderDate { get; set; }
+
+        public TimeSpan? ReminderTime { get; set; }
     }
 }
