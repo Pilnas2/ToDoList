@@ -26,7 +26,7 @@ namespace ToDoList.Views
 
         void BtnAddTask(object sender, EventArgs e)
         {
-            if (AddTask.IsVisible == true)
+            if (AddTask.IsVisible)
             {
                 OnEntryCompletedAsync(sender, e);
             }
@@ -36,7 +36,11 @@ namespace ToDoList.Views
         void HideKeyboard(object sender, EventArgs e)
         {
             entryAddTask.IsEnabled = false;
-            entryAddTask.IsEnabled = true;
+            //entryAddTask.IsEnabled = true;
+        }
+        void OnAddNoteClicked(object sender, EventArgs e)
+        {
+            AddNote.IsVisible = true;
         }
         void OnDueDateButtonClicked(object sender, EventArgs e)
         {
@@ -50,6 +54,7 @@ namespace ToDoList.Views
         {
             AddDueDatePicker.IsVisible = false;
             AddReminderDatePicker.IsVisible = false;
+            AddNote.IsVisible = false;
         }
 
         void OnDueDatePickerButtonClicked(object sender, EventArgs e)
@@ -75,6 +80,10 @@ namespace ToDoList.Views
             await database.DeleteItemAsync(todoItem);
             await Navigation.PushAsync(new TodoItemPage());
         }
+        void OnReminderDateDone(object sender, EventArgs e)
+        {
+            AddReminderDatePicker.IsVisible = false;
+        }
         void OnDueDateDone(object sender, EventArgs e)
         {
             AddDueDate.IsVisible = false;
@@ -83,6 +92,13 @@ namespace ToDoList.Views
         void OnReminderDateimTimeDone(object sender, EventArgs e)
         {
             AddReminderDatePicker.IsVisible = false;
+        }
+
+        void OnAddNoteDone(object sender, EventArgs e)
+        {
+            var todoItem = (ToDoItem)BindingContext;
+            todoItem.Note = EditorNote.Text;
+            Back(sender, e);
         }
 
         void OnTodayDueDateDone(object sender, EventArgs e)
@@ -124,6 +140,16 @@ namespace ToDoList.Views
         {
             var todoItem = (ToDoItem)BindingContext;
             todoItem.ReminderTime = tpReminderTime.Time;
+        }
+
+        private async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem != null)
+            {
+                var selectedItem = (ToDoItem)e.SelectedItem;
+                await Navigation.PushAsync(new ToDoItemDetail(selectedItem));
+                ((ListView)sender).SelectedItem = null;
+            }
         }
     }
 }
