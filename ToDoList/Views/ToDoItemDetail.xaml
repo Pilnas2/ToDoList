@@ -11,7 +11,11 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -24,6 +28,7 @@
                 VerticalOptions="Start"
                 Grid.Column="2"
                 Grid.Row="0"
+                Clicked="UpdateItemAsync"
                 Background="Transparent" />
         <CheckBox Grid.Column="0"
                   Grid.Row="1"
@@ -45,119 +50,64 @@
                 TextColor="White"
                 ImageSource="alarm.png"
                 Grid.Row="3"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
+                Grid.Column="0"
                 BackgroundColor="Transparent"
                 HorizontalOptions="Start" />
+        <TimePicker x:Name="timePickerEdit"
+                    Time="{Binding ReminderTime}"
+                    Grid.Row="3"
+                    Grid.Column="1" />
+        <DatePicker x:Name="reminderDatePickerEdit"
+                    MinimumDate="{Binding DueDate}"
+                    Date="{Binding ReminderDate}"
+                    Grid.Row="4"
+                    Grid.Column="1" />
+        <BoxView Color="White"
+                 HeightRequest="1"
+                 Grid.Row="5"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="3" />
         <Button Text="Termín Splnění"
                 TextColor="White"
                 ImageSource="calendar.png"
-                Grid.Row="4"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
+                Grid.Row="6"
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                BackgroundColor="Transparent" />
+        <DatePicker x:Name="dueDatePickerEdit"
+                    Date="{Binding DueDate}"
+                    Grid.Row="6"
+                    Grid.Column="1" />
+        <BoxView Color="White"
+                 HeightRequest="1"
+                 Grid.Row="7"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="3" />
+        <Button ImageSource="note15.png"
+                Text="Poznámka"
+                Grid.Row="8"
+                Grid.Column="0"
                 HorizontalOptions="Start"
                 BackgroundColor="Transparent" />
         <Editor Text="{Binding Note}"
+                Grid.Row="8"
+                Grid.RowSpan="1"
+                Grid.Column="1" />
+        <BoxView Color="White"
+                 HeightRequest="1"
+                 Grid.Row="9"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="3" />
+        <Button Text="Smazat"
+                ImageSource="bin15.png"
                 TextColor="White"
-                Grid.Row="5"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
-                HorizontalOptions="StartAndExpand" />
-
-
-        <Border x:Name="EditDueDatePicker"
-                Grid.Column="0"
+                Grid.Row="10"
                 Grid.ColumnSpan="3"
-                Grid.Row="7"
-                IsVisible="false"
-                BackgroundColor="Red">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="20,20,0,0" />
-            </Border.StrokeShape>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Label Text="Vyberte datum"
-                       Margin="10"
-                       Grid.ColumnSpan="2"
-                       Grid.Row="0"
-                       HorizontalOptions="Center"
-                       TextColor="White"
-                       FontAttributes="Bold"
-                       TextDecorations="Underline" />
-                <Button Text="Zpět"
-                        HorizontalOptions="End"
-                        VerticalOptions="Start"
-                        Margin="10"
-                        BackgroundColor="Transparent"
-                        Grid.Column="1" />
-                <!--Clicked="Back" />-->
-                <DatePicker x:Name="dueDatePicker"
-                            TextColor="White"
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Margin="10" />
-                <!--DateSelected="OnPickDateDueDateDone">-->
-            </Grid>
-        </Border>
-
-        <Border x:Name="EditReminderDatePicker"
-                Grid.Column="0"
-                Grid.ColumnSpan="3"
-                Grid.Row="7"
-                IsVisible="false"
-                BackgroundColor="Orange">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="20,20,0,0" />
-            </Border.StrokeShape>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Label Text="Vyberte datum a čas připomínky"
-                       Margin="10"
-                       Grid.ColumnSpan="2"
-                       Grid.Row="0"
-                       HorizontalOptions="Center"
-                       TextColor="White"
-                       FontAttributes="Bold"
-                       TextDecorations="Underline" />
-                <Button Text="Zpět"
-                        HorizontalOptions="End"
-                        VerticalOptions="Start"
-                        Margin="10"
-                        BackgroundColor="Transparent"
-                        Grid.Column="1" />
-                <!--Clicked="OnReminderDateDone" />-->
-                <DatePicker x:Name="reminderDatePicker"
-                            TextColor="White"
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Margin="10" />
-                <!--DateSelected="OnPickDateReminderDone">-->
-                <TimePicker x:Name="tpReminderTime"
-                            Grid.Row="2"
-                            Grid.Column="0"
-                            TextColor="White"
-                            Margin="10" />
-                <!--PropertyChanged="OnTimePickerPropertyChanged" />-->
-
-            </Grid>
-        </Border>
-
-
+                Pressed="DeleteItemAsync"
+                Background="Transparent"
+                BorderColor="Red"
+                BorderWidth="1"
+                Margin="10" />
     </Grid>
 
 
