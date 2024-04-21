@@ -48,7 +48,7 @@
                  Grid.ColumnSpan="3" />
         <Button Text="Připomenout"
                 TextColor="White"
-                ImageSource="alarm.png"
+                ImageSource="alarm15.png"
                 Grid.Row="3"
                 Grid.Column="0"
                 BackgroundColor="Transparent"

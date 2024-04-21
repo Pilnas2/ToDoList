@@ -42,15 +42,20 @@
                                 <Frame Padding="30,10"
                                        BackgroundColor="Gray">
                                     <StackLayout Orientation="Horizontal">
+                                        <CheckBox IsChecked="{Binding IsCompleted}" />
                                         <StackLayout>
                                             <Label Text="{Binding Name}"
                                                    TextColor="White" />
                                             <StackLayout Orientation="Horizontal">
                                                 <Image Source="calendar.png"
-                                                       Margin="0,0,5,0" />
+                                                       Margin="0,0,5,0"
+                                                       IsVisible="{Binding DueDate}" />
                                                 <Label Text="{Binding DueDate, StringFormat='{}{0:dd.MM.yyyy}'}"
                                                        TextColor="#A09B9B" />
-
+                                                <Image Source="alarm15.png"
+                                                       Margin="5,0,5,0" />
+                                                <Label Text="{Binding ReminderDate, StringFormat='{}{0:dd.MM.yyyy}'}"
+                                                       TextColor="#A09B9B" />
                                             </StackLayout>
                                         </StackLayout>
                                     </StackLayout>
@@ -107,7 +112,7 @@
                         <toolkit:IconTintColorBehavior TintColor="White" />
                     </ImageButton.Behaviors>
                 </ImageButton>
-                <ImageButton Source="alarm.png"
+                <ImageButton Source="alarm15.png"
                              HeightRequest="15"
                              WidthRequest="15"
                              Grid.Row="1"
