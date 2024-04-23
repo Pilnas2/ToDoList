@@ -2,18 +2,22 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using Microsoft.VisualBasic;
+using MyApp;
 using ToDoList.Models;
+using ToDoList.ViewModel;
 
 namespace ToDoList.Views
 {
     public partial class TodoItemPage : ContentPage
     {
+        DatabaseChecker dataChecker = new DatabaseChecker();
         public TodoItemPage()
         {
             InitializeComponent();
             BindingContext = new ToDoItem();
             dueDatePicker.MinimumDate = DateTime.Today;
             reminderDatePicker.MinimumDate = DateTime.Today;
+            dataChecker = new DatabaseChecker();
         }
 
         protected override async void OnAppearing()

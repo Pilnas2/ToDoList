@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
+using Plugin.LocalNotification;
 
 namespace ToDoList
 {
@@ -10,6 +11,7 @@ namespace ToDoList
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseLocalNotification()
                 .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {

@@ -63,5 +63,16 @@ namespace ToDoList
         {
             return Database.DeleteAsync(item);
         }
+
+        public bool CheckIfValuesMatchCurrentDate(DateTime currentDate)
+        {
+            DateTime cas = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 47, 0);
+            int porovnani = DateTime.Compare(currentDate, cas);
+            if (porovnani == 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
