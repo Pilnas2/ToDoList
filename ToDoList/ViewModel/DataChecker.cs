@@ -2,57 +2,39 @@
 using System;
 using System.Timers;
 using ToDoList;
+using ToDoList.Models;
 
 namespace MyApp
 {
     public class DatabaseChecker : ContentPage
     {
         private readonly System.Timers.Timer _timer;
-        private readonly TodoItemDatabase _databaseService; // Nahraďte tím, co používáte pro přístup k databázi
 
         public DatabaseChecker()
         {
             _timer = new System.Timers.Timer();
             _timer.AutoReset = true;
-            _timer.Elapsed += CheckDatabase;
-            _timer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
+            _timer.Elapsed += CheckDatabaseAsync;
+            _timer.Interval = TimeSpan.FromSeconds(60).TotalMilliseconds;
             _timer.Start();
         }
 
-        private void CheckDatabase(object sender, ElapsedEventArgs e)
+        private async void CheckDatabaseAsync(object sender, ElapsedEventArgs e)
         {
+            TodoItemDatabase database = await TodoItemDatabase.Instance;
+            var matchingItems = await database.GetItemsNotDoneAsync();
 
-            var request = new NotificationRequest
+            foreach (var item in matchingItems)
             {
-                Title = "AHOJ",
-                Subtitle = "hello",
-                Description = "nevim",
-                Schedule = new NotificationRequestSchedule
+                Console.WriteLine($"ID: {item.ID}, Název: {item.Name}, Datum: {item.DueDate}");
+                var request = new NotificationRequest
                 {
-
-                    NotifyTime = DateTime.Now,
-                    NotifyRepeatInterval = TimeSpan.FromDays(1),
-                }
-            };
-            LocalNotificationCenter.Current.Show(request);
-
-            //DateTime currentDate = DateTime.Now.Date; // Aktuální datum bez času
-
-            //DateTime cas = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 16, 03, 0);
-            //int porovnani = DateTime.Compare(currentDate, cas);
-            //if (porovnani == -1)
-            //{
-            //    var request = new NotificationRequest
-            //    {
-            //        Title = "AHOJ",
-            //        Schedule = new NotificationRequestSchedule
-            //        {
-            //            NotifyTime = DateTime.Now,
-            //            NotifyRepeatInterval = TimeSpan.FromDays(1),
-            //        }
-            //    };
-            //    LocalNotificationCenter.Current.Show(request);
-            //}
+                    Title = "Je na čase splnit váš úkol: \n" + item.Name,
+                    Description = "termín splnění: " + item.DueDate.ToString(),
+                };
+                await LocalNotificationCenter.Current.Show(request);
+            }
         }
     }
 }
+

@@ -9,6 +9,7 @@ public partial class ToDoItemDetail : ContentPage
     {
         InitializeComponent();
         BindingContext = item;
+        //dueDatePickerEdit.Date = null;
     }
 
     async void UpdateItemAsync(object sender, EventArgs e)

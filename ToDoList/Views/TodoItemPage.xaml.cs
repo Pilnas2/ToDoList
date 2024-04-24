@@ -86,6 +86,9 @@ namespace ToDoList.Views
         }
         void OnReminderDateDone(object sender, EventArgs e)
         {
+            var todoItem = (ToDoItem)BindingContext;
+            todoItem.ReminderDate = reminderDatePicker.Date;
+            todoItem.ReminderTime = tpReminderTime.Time;
             AddReminderDatePicker.IsVisible = false;
         }
         void OnDueDateDone(object sender, EventArgs e)
@@ -126,11 +129,11 @@ namespace ToDoList.Views
             todoItem.DueDate = e.NewDate;
             OnDueDateDone(sender, e);
         }
-        void OnPickDateReminderDone(object sender, DateChangedEventArgs e)
-        {
-            var todoItem = (ToDoItem)BindingContext;
-            todoItem.ReminderDate = e.NewDate;
-        }
+        //void OnPickDateReminderDone(object sender, DatePickedEventArgs e)
+        //{
+        //    var todoItem = (ToDoItem)BindingContext;
+        //    //todoItem.ReminderDate = e.NewDate;
+        //}
 
         void OnTimePickerPropertyChanged(object sender, PropertyChangedEventArgs e)
         {

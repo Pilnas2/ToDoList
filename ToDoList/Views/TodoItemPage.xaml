@@ -108,9 +108,6 @@
                              HorizontalOptions="Start"
                              Margin="10,0,0,0"
                              Clicked="OnDueDateButtonClicked">
-                    <ImageButton.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="White" />
-                    </ImageButton.Behaviors>
                 </ImageButton>
                 <ImageButton Source="alarm15.png"
                              HeightRequest="15"
@@ -119,9 +116,6 @@
                              Grid.Column="1"
                              HorizontalOptions="Start"
                              Clicked="OnReminderDateButtonClicked">
-                    <ImageButton.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="White" />
-                    </ImageButton.Behaviors>
                 </ImageButton>
                 <ImageButton Source="note.png"
                              HeightRequest="15"
@@ -130,10 +124,6 @@
                              Grid.Column="2"
                              HorizontalOptions="Start"
                              Clicked="OnAddNoteClicked">
-
-                    <ImageButton.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="White" />
-                    </ImageButton.Behaviors>
                 </ImageButton>
             </Grid>
         </Border>
@@ -299,15 +289,14 @@
                             Grid.Row="1"
                             Grid.Column="0"
                             Margin="10"
-                            DateSelected="OnPickDateReminderDone">
+                            Date="{Binding ReminderDate}">
                 </DatePicker>
                 <TimePicker x:Name="tpReminderTime"
                             Grid.Row="2"
                             Grid.Column="0"
                             TextColor="White"
                             Margin="10"
-                            PropertyChanged="OnTimePickerPropertyChanged" />
-
+                            Time="{Binding ReminderTime}" />
             </Grid>
         </Border>
         <Border x:Name="AddNote"

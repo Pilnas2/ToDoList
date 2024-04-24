@@ -33,8 +33,6 @@
         <CheckBox Grid.Column="0"
                   Grid.Row="1"
                   IsChecked="{Binding IsCompleted}" />
-
-
         <Entry Text="{Binding Name}"
                TextColor="White"
                VerticalOptions="Center"
@@ -51,7 +49,8 @@
                 ImageSource="alarm15.png"
                 Grid.Row="3"
                 Grid.Column="0"
-                HorizontalOptions="Start" />
+                HorizontalOptions="Start"
+                BackgroundColor="Transparent" />
         <TimePicker x:Name="timePickerEdit"
                     Time="{Binding ReminderTime}"
                     Grid.Row="3"

@@ -38,8 +38,12 @@ namespace ToDoList
 
         public Task<List<ToDoItem>> GetItemsNotDoneAsync()
         {
-            // SQL queries are also possible
-            return Database.QueryAsync<ToDoItem>("SELECT * FROM [TodoItem]");
+            long reminderDate = DateTime.Now.Date.Ticks;
+            DateTime now = DateTime.Now;
+
+            long reminderTime = now.Hour * TimeSpan.TicksPerHour + now.Minute * TimeSpan.TicksPerMinute;
+
+            return Database.QueryAsync<ToDoItem>("SELECT * FROM [TodoItem] WHERE ReminderDate = ? AND ReminderTime = ?", reminderDate, reminderTime);
         }
 
         public Task<ToDoItem> GetItemAsync(int id)
@@ -64,15 +68,10 @@ namespace ToDoList
             return Database.DeleteAsync(item);
         }
 
-        public bool CheckIfValuesMatchCurrentDate(DateTime currentDate)
+        public Task<List<ToDoItem>> GetItemsMatchingCurrentDate()
         {
-            DateTime cas = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 47, 0);
-            int porovnani = DateTime.Compare(currentDate, cas);
-            if (porovnani == 0)
-            {
-                return true;
-            }
-            return false;
+            //long currentDate = DateTime.Now.Date.Ticks;
+            return Database.QueryAsync<ToDoItem>("SELECT * FROM [TodoItem] WHERE ID = ?", 1);
         }
     }
 }
