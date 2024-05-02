@@ -8,8 +8,6 @@
        ForegroundColor="{DynamicResource White}"
        TitleColor="{DynamicResource White}">
 
-
-
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent Title="Úkoly"
                       Icon="tasks.png"
@@ -25,5 +23,6 @@
     <ShellContent Title="About"
                   Icon="info.png"
                   ContentTemplate="{DataTemplate views:SettingsPage}" />
+
 
 </Shell>

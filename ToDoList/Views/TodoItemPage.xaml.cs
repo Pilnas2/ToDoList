@@ -158,5 +158,23 @@ namespace ToDoList.Views
                 ((ListView)sender).SelectedItem = null;
             }
         }
+
+        private async void GetNotDone(object sender, EventArgs e)
+        {
+            TodoItemDatabase database = await TodoItemDatabase.Instance;
+            myListView.ItemsSource = await database.GetItemsNotDoneAsync();
+        }
+
+        private async void GetDone(object sender, EventArgs e)
+        {
+            TodoItemDatabase database = await TodoItemDatabase.Instance;
+            myListView.ItemsSource = await database.GetItemsDoneAsync();
+        }
+
+        void CancelFilter(object sender, EventArgs e)
+        {
+            OnAppearing();
+        }
+
     }
 }

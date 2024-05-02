@@ -14,11 +14,8 @@ namespace ToDoList.Models
         public string? Name { get; set; }
         public DateTime? DueDate { get; set; }
         public DateTime? ReminderDate { get; set; }
-
         public TimeSpan? ReminderTime { get; set; }
-
         public String? Note { get; set; }
-
         public bool IsCompleted { get; set; }
     }
 }

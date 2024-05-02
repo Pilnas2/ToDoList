@@ -9,7 +9,6 @@ public partial class ToDoItemDetail : ContentPage
     {
         InitializeComponent();
         BindingContext = item;
-        //dueDatePickerEdit.Date = null;
     }
 
     async void UpdateItemAsync(object sender, EventArgs e)
@@ -22,16 +21,8 @@ public partial class ToDoItemDetail : ContentPage
     async void DeleteItemAsync(object sender, EventArgs e)
     {
         var todoItem = (ToDoItem)BindingContext;
-        if (todoItem is null) return;
         TodoItemDatabase database = await TodoItemDatabase.Instance;
         await database.DeleteItemAsync(todoItem);
         await Navigation.PushAsync(new TodoItemPage());
     }
-    //void InitalizeChecker(ToDoItem item)
-    //{
-    //    if (item.DueDate.HasValue)
-    //    {
-    //        reminderDatePickerEdit = new DateTime(item.DueDate);
-    //    }
-    //}
 }

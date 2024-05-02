@@ -56,7 +56,6 @@
                     Grid.Row="3"
                     Grid.Column="1" />
         <DatePicker x:Name="reminderDatePickerEdit"
-                    MinimumDate="{Binding DueDate}"
                     Date="{Binding ReminderDate}"
                     Grid.Row="4"
                     Grid.Column="1" />

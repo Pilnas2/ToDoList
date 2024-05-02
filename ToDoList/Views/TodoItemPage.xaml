@@ -5,6 +5,24 @@
              Title="To Do List"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="sort.png"
+                     Clicked="GetNotDone">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="Filtrovat">
+            <MenuFlyoutItem Text="hotové úkoly"
+                            Clicked="GetDone"></MenuFlyoutItem>
+            <MenuFlyoutItem Text="nehotové úkoly"
+                            Clicked="GetNotDone"></MenuFlyoutItem>
+            <MenuFlyoutItem Text="zrušit filtr"
+                            Clicked="CancelFilter"></MenuFlyoutItem>
+
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
