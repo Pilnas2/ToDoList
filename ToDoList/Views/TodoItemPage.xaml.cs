@@ -11,6 +11,8 @@ namespace ToDoList.Views
     public partial class TodoItemPage : ContentPage
     {
         DatabaseChecker dataChecker = new DatabaseChecker();
+        private int categoryId;
+
         public TodoItemPage()
         {
             InitializeComponent();
@@ -19,12 +21,17 @@ namespace ToDoList.Views
             reminderDatePicker.MinimumDate = DateTime.Today;
             dataChecker = new DatabaseChecker();
         }
+        public int CategoryId
+        {
+            get { return categoryId; }
+            set { categoryId = value; }
+        }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
             TodoItemDatabase database = await TodoItemDatabase.Instance;
-            myListView.ItemsSource = await database.GetItemsAsync();
+            myListView.ItemsSource = await database.GetItemsAsync(categoryId);
         }
 
 
@@ -69,10 +76,12 @@ namespace ToDoList.Views
         async void OnEntryCompletedAsync(object sender, EventArgs e)
         {
             var todoItem = (ToDoItem)BindingContext;
+            todoItem.ToDoListCategoryId = categoryId;
             TodoItemDatabase database = await TodoItemDatabase.Instance;
             await database.SaveItemAsync(todoItem);
+            entryAddTask.Text = "";
             HideKeyboard(sender, e);
-            await Navigation.PushAsync(new TodoItemPage());
+            OnAppearing();
         }
         async void OnItemDeletedAsync(object sender, EventArgs e)
         {

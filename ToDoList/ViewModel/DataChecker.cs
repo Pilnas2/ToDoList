@@ -1,5 +1,6 @@
 ﻿using Plugin.LocalNotification;
 using System;
+using System.Threading;
 using System.Timers;
 using ToDoList;
 using ToDoList.Models;
@@ -16,7 +17,7 @@ namespace MyApp
             _timer = new System.Timers.Timer();
             _timer.AutoReset = true;
             _timer.Elapsed += CheckDatabaseAsync;
-            _timer.Interval = TimeSpan.FromMinutes(1).TotalMilliseconds;
+            _timer.Interval = TimeSpan.FromSeconds(60).TotalMilliseconds;
             _timer.Start();
 
             LocalNotificationCenter.Current.NotificationActionTapped += Current_NotificationActionTapped;
@@ -39,7 +40,7 @@ namespace MyApp
                 var request = new NotificationRequest
                 {
                     Title = "Je na čase splnit váš úkol: \n" + item.Name,
-                    Description = "termín splnění: " + item.DueDate.ToString(),
+                    Description = "termín splnění: " + (item.DueDate != null ? item.DueDate.Value.Date.ToString("yyyy-MM-dd") : "N/A"),
                 };
                 await LocalNotificationCenter.Current.Show(request);
             }

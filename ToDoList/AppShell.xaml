@@ -4,9 +4,10 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:views="clr-namespace:ToDoList.Views"
        FlyoutBehavior="Flyout"
+       FlyoutVerticalScrollMode="Auto"
        BackgroundColor="{DynamicResource Primary}"
-       ForegroundColor="{DynamicResource White}"
-       TitleColor="{DynamicResource White}">
+       ForegroundColor="{DynamicResource Black}"
+       TitleColor="{DynamicResource Black}">
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent Title="Úkoly"
@@ -16,13 +17,92 @@
         </ShellContent>
         <ShellContent Title="Nastavení"
                       Icon="settings.png"
-                      ContentTemplate="{DataTemplate views:SettingsPage}">
+                      ContentTemplate="{DataTemplate views:SettingsPage}"
+                      Route="SettingsPage">
 
         </ShellContent>
     </FlyoutItem>
-    <ShellContent Title="About"
-                  Icon="info.png"
-                  ContentTemplate="{DataTemplate views:SettingsPage}" />
+
+    <Shell.FlyoutFooter>
+
+        <Grid HorizontalOptions="Center"
+              VerticalOptions="Center"
+              Margin="20,0,20,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label Text="Seznam Kategorií"
+                   Grid.Row="0">
+
+            </Label>
+            <ListView x:Name="CategoryListView"
+                      Grid.Row="1"
+                      SeparatorVisibility="None"
+                      ItemSelected="OnItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItem Text="Smaž"
+                                               IconImageSource="bin.png"
+                                               BackgroundColor="Red"
+                                               Invoked="OnCategoryDelete"></SwipeItem>
+                                </SwipeView.RightItems>
+
+                                <ContentView Padding="4">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Name}"
+                                               TextColor="Black"></Label>
+                                    </StackLayout>
+                                </ContentView>
+
+                            </SwipeView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Border x:Name="AddCategory"
+                    IsVisible="true"
+                    BackgroundColor="Black"
+                    Grid.Row="2">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20,20,0,0" />
+                </Border.StrokeShape>
+
+
+                <Grid Margin="10">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+
+                    </Grid.RowDefinitions>
+                    <Label Text="Přidat Kategorii"
+                           Grid.Column="0"
+                           Grid.Row="0"
+                           TextColor="White"></Label>
+
+                    <Entry Grid.Column="0"
+                           Grid.Row="1"
+                           Background="White"
+                           Completed="OnCategoryAdd"
+                           Text="{Binding Name}"
+                           x:Name="AddCategoryEntry">
+
+                    </Entry>
+
+                </Grid>
+
+            </Border>
+        </Grid>
+    </Shell.FlyoutFooter>
 
 
 </Shell>

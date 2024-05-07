@@ -2,12 +2,25 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ToDoList.Views.SettingsPage"
-             Shell.TitleColor="White">
+             Shell.TitleColor="{AppThemeBinding Dark={StaticResource Black},Light={StaticResource White}}">
 
-
-    <VerticalStackLayout>
-        <Label Text="Welcome to .NET MAUI!"
-               VerticalOptions="Center"
-               HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <StackLayout RadioButtonGroup.GroupName="AppTheme"
+                 Margin="10">
+        <Label Text="Vyberte téma" />
+        <RadioButton Value="System"
+                     x:Name="RadioButtonSystem"
+                     CheckedChanged="RadioButton_CheckedChanged"
+                     Content="Systémové">
+        </RadioButton>
+        <RadioButton Value="Light"
+                     x:Name="RadioButtonLight"
+                     CheckedChanged="RadioButton_CheckedChanged"
+                     Content="Světlé">
+        </RadioButton>
+        <RadioButton Value="Dark"
+                     x:Name="RadioButtonDark"
+                     CheckedChanged="RadioButton_CheckedChanged"
+                     Content="Tmavé">
+        </RadioButton>
+    </StackLayout>
 </ContentPage>

@@ -34,6 +34,7 @@ namespace ToDoList
             using (var connection = new SQLiteConnection(path, Flags))
             {
                 connection.CreateTable<ToDoItem>();
+                connection.CreateTable<ToDoListCategory>();
             }
         }
     }

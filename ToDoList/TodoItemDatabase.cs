@@ -18,6 +18,7 @@ namespace ToDoList
             try
             {
                 CreateTableResult result = await Database.CreateTableAsync<ToDoItem>();
+                CreateTableResult result2 = await Database.CreateTableAsync<ToDoListCategory>();
             }
             catch (Exception ex)
             {
@@ -31,9 +32,9 @@ namespace ToDoList
         {
             Database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
         }
-        public Task<List<ToDoItem>> GetItemsAsync()
+        public Task<List<ToDoItem>> GetItemsAsync(int categoryId)
         {
-            return Database.Table<ToDoItem>().ToListAsync();
+            return Database.Table<ToDoItem>().Where(item => item.ToDoListCategoryId == categoryId).ToListAsync();
         }
 
         public Task<List<ToDoItem>> GetItemsNotDoneAsync()
@@ -75,6 +76,33 @@ namespace ToDoList
         public Task<int> DeleteItemAsync(ToDoItem item)
         {
             return Database.DeleteAsync(item);
+        }
+
+        public Task<List<ToDoListCategory>> GetCategoriesAsync()
+        {
+            return Database.Table<ToDoListCategory>().ToListAsync();
+        }
+
+        public Task<ToDoListCategory> GetCategoryAsync(int id)
+        {
+            return Database.Table<ToDoListCategory>().Where(c => c.ID == id).FirstOrDefaultAsync();
+        }
+
+        public Task<int> SaveCategoryAsync(ToDoListCategory category)
+        {
+            if (category.ID != 0)
+            {
+                return Database.UpdateAsync(category);
+            }
+            else
+            {
+                return Database.InsertAsync(category);
+            }
+        }
+
+        public Task<int> DeleteCategoryAsync(ToDoListCategory category)
+        {
+            return Database.DeleteAsync(category);
         }
 
     }

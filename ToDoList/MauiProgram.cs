@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using Plugin.LocalNotification;
+using ToDoList.ViewModel;
+using ToDoList.Views;
 
 namespace ToDoList
 {
@@ -25,6 +27,9 @@ namespace ToDoList
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
+            builder.Services.AddSingleton<IEnvironment, ToDoList.Platforms.Android.Resources.Environment>();
+            builder.Services.AddSingleton<TheTheme>();
+            builder.Services.AddTransient<SettingsPage>();
 
             return builder.Build();
         }

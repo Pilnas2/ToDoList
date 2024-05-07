@@ -11,6 +11,7 @@ namespace ToDoList.Models
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
+        public int ToDoListCategoryId { get; set; }
         public string? Name { get; set; }
         public DateTime? DueDate { get; set; }
         public DateTime? ReminderDate { get; set; }
