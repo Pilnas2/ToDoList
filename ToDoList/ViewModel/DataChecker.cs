@@ -16,7 +16,7 @@ namespace MyApp
             _timer = new System.Timers.Timer();
             _timer.AutoReset = true;
             _timer.Elapsed += CheckDatabaseAsync;
-            _timer.Interval = TimeSpan.FromSeconds(60).TotalMilliseconds;
+            _timer.Interval = TimeSpan.FromMinutes(1).TotalMilliseconds;
             _timer.Start();
 
             LocalNotificationCenter.Current.NotificationActionTapped += Current_NotificationActionTapped;
