@@ -49,7 +49,7 @@ namespace ToDoList
                 var selectedCategory = (ToDoListCategory)e.SelectedItem;
                 var todoItemPage = new TodoItemPage();
                 todoItemPage.CategoryId = selectedCategory.ID;
-                await Navigation.PushAsync(todoItemPage);
+                Shell.Current.GoToAsync($"//{nameof(TodoItemPage)}");
                 ((ListView)sender).SelectedItem = null;
             }
             Shell.Current.FlyoutIsPresented = false;
